@@ -8,7 +8,6 @@ import { AiOutlineRollback } from 'react-icons/ai';
 
 const Projects = () => {
     const location = useLocation()
-    console.log(location.pathname)
     const returnF = () => {
         window.history.back()
     }

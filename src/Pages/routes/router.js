@@ -13,7 +13,11 @@ import Home from "../Home/Home";
 import ErrorElement from '../../Components/SharedComponents/Error'
 import Projects from "../../Components/HomeComponents/Projects";
 import Login from "../Auth/Login/Login";
+import LoginBox from "../Auth/Login/LoginBox";
 import SignUp from "../Auth/SignUp/SignUp";
+import Booked from "../Dashboard/User/Booked";
+import Dashboard from "../../layer/Dashboard/Dashboard";
+import Review from "../Dashboard/User/Review";
 
 
 
@@ -43,8 +47,28 @@ const router = createBrowserRouter([
         element: <Login />
       },
       {
+        path: '/loginBox',
+        element: <LoginBox />
+      },
+      {
         path: '/signup',
         element: <SignUp />
+      },
+
+
+    ]
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <Booked />
+      },
+      {
+        path: "review",
+        element: <Review />
       },
 
 

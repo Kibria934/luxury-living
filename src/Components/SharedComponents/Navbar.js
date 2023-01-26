@@ -1,16 +1,23 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
+import { removeUser } from '../../features/auth/authSlice';
 import navLogo from '../../images/navbarLogo.png'
 
 const Navbar = () => {
     const { pathname } = useLocation()
+    const { email } = useSelector(state => state.auth.user)
+    const dispatch = useDispatch()
 
+    const handleSignOut = () => {
+        dispatch(removeUser())
+    }
     const navCommonStyle = 'hover:bg-base-200  active:bg-primary px-4 py-2 rounded-md cursor-pointer transition-all duration-300'
     return (
         pathname !== '/login' && <div className="navbar lg:w-[98vw] lg:mx-auto lg:rounded-lg lg:mt-2 drop-shadow-lg bg-base-100">
             <div className="navbar-start">
                 <div className='ml-5 px-4 hidden lg:block md:block'>
-                    <img className='w-28' src={navLogo} alt="" />
+                    <Link to="/"><img className='w-28' src={navLogo} alt="" /></Link>
                 </div>
                 <div className="dropdown lg:hidden md:hidden">
                     <label tabIndex={0} className="btn btn-ghost btn-circle">
@@ -36,9 +43,11 @@ const Navbar = () => {
                     <Link className={navCommonStyle} to={'/about'}>about</Link>
                     <Link className={navCommonStyle} to={'/contact'}>Contact</Link>
                 </ul>
-                <Link to={"/login"} className="btn btn-primary">
+                {!email ? <Link to={"/login"} className="btn btn-primary">
                     login
-                </Link>
+                </Link> : (<button onClick={handleSignOut} className="btn btn-primary">
+                    Log out
+                </button>)}
             </div>
         </div>
 

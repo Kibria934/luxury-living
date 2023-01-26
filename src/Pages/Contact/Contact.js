@@ -26,6 +26,7 @@ const Contact = () => {
                         <input type="text" placeholder="Type here" className="input w-full bg-slate-100 max-w-xs" />
                     </div>
                     <textarea className="textarea textarea-bordered h-40  bg-slate-100 w-full" placeholder="Bio"></textarea>
+                    <button type="submit" className='w-full btn btn-primary rounded-none mt-10'>Sent Message</button>
                 </div>
             </div >
         </div>
