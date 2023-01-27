@@ -2,26 +2,24 @@
 
 module.exports = {
   content: ["./src/**/*.{html,js}"],
-  // theme: {
-  //   // extend: {
-  //   //   colors: {
-  //   //     bg: '#F6F6F6',
-  //   //     primary: '#251D58',
-  //   //     secondary: "#1F1632"
-  //   //   },
-  //   //   fontSize: {
-  //   //     default: '16px  '
-  //   //   }
-  //   // },
-  // },
+
   theme: {
     extend: {
       colors: {
         "navi": "#003060"
 
+      },
+      screens: {
+        "xs": "326px",
+        "sm": "	640px	",
+        "md": "768px",
+        "lg": "1024px",
+        "xl": "1280px",
+        "2xl": "1536px",
       }
-    }
+    },
   },
+
   daisyui: {
     themes: [
       {

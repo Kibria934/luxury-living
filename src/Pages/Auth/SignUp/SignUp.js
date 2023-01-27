@@ -5,7 +5,7 @@ import AuthBox from '../../../Components/SharedComponents/AuthBox';
 import googleLogo from '../../../Icon/Group 573.png'
 import { BiError } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
-import { createUser, updateUser } from '../../../features/auth/authSlice';
+import { createUser } from '../../../features/auth/authSlice';
 
 
 const SignUp = () => {

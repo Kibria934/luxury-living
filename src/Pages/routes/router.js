@@ -15,9 +15,10 @@ import Projects from "../../Components/HomeComponents/Projects";
 import Login from "../Auth/Login/Login";
 import LoginBox from "../Auth/Login/LoginBox";
 import SignUp from "../Auth/SignUp/SignUp";
-import Booked from "../Dashboard/User/Booked";
 import Dashboard from "../../layer/Dashboard/Dashboard";
 import Review from "../Dashboard/User/Review";
+import BookList from "../Dashboard/User/BookList";
+import Order from "../Dashboard/User/Order";
 
 
 
@@ -64,13 +65,16 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
-        element: <Booked />
+        element: <Order />
+      },
+      {
+        path: "booklist",
+        element: <BookList />
       },
       {
         path: "review",
         element: <Review />
       },
-
 
     ]
   },

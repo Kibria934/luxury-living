@@ -63,7 +63,10 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, { payload }) => {
+            console.log('payload', payload)
             state.user.email = payload.email
+            state.user.name = payload.displayName
+            state.user.imgUrl = payload?.photoURL
         },
         setLoading: (state, { payload }) => {
             state.isLoading = payload;
@@ -131,11 +134,13 @@ const authSlice = createSlice({
                 state.isError = false
                 state.error = ""
                 state.user.email = ""
+                state.user.name = ""
+                state.user.imgUrl = ""
             })
-            .addCase(removeUser.rejected, (state) => {
+            .addCase(removeUser.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
-                state.error = "something went wrong"
+                state.error = action.error.message
             })
 
     }

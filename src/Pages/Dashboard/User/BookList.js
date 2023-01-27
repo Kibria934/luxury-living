@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Booked = () => {
+const BookList = () => {
     return (
         <div>
             <h2>VBoooked section</h2>
@@ -11,4 +11,4 @@ const Booked = () => {
     );
 };
 
-export default Booked;
+export default BookList;

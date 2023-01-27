@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import auth from './firebase_init';
 import { setLoading, setUser } from './features/auth/authSlice';
 import { onAuthStateChanged } from 'firebase/auth';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const dispatch = useDispatch()
@@ -22,7 +23,7 @@ function App() {
       }
       dispatch(setLoading(false))
     })
-  }, [])
+  }, [auth])
 
   if (isLoading) {
     return <p>Loading...</p>
@@ -32,6 +33,7 @@ function App() {
   return (
     <div className="App">
       <RouterProvider router={router} />
+     
     </div>
   );
 }
