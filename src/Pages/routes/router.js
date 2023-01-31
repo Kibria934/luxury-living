@@ -15,10 +15,16 @@ import Projects from "../../Components/HomeComponents/Projects";
 import Login from "../Auth/Login/Login";
 import LoginBox from "../Auth/Login/LoginBox";
 import SignUp from "../Auth/SignUp/SignUp";
-import Dashboard from "../../layer/Dashboard/Dashboard";
+import Dashboard from "../../Components/DahboardComponents/UserComponents/Dashboard";
 import Review from "../Dashboard/User/Review";
 import BookList from "../Dashboard/User/BookList";
 import Order from "../Dashboard/User/Order";
+import Payment from "../Payment/Payment";
+import Success from "../Payment/Success";
+import Failed from "../Payment/Failed";
+import Register from "../Auth/register/Register";
+import PrivateRoute from "../Auth/PrivateRoute/PrivateRoute";
+import AccountCreator from "../Auth/AccountCreator/AccountCreator";
 
 
 
@@ -55,10 +61,26 @@ const router = createBrowserRouter([
         path: '/signup',
         element: <SignUp />
       },
+      {
+        path: '/register',
+        element:
+          <PrivateRoute>
+            <Register />
+          </PrivateRoute>
+      },
+      {
+        path: '/register/:type',
+        element:
+          <PrivateRoute>
+            <AccountCreator />
+          </PrivateRoute>
+      },
+
 
 
     ]
   },
+
   {
     path: "/dashboard",
     element: <Dashboard />,
@@ -75,6 +97,19 @@ const router = createBrowserRouter([
         path: "review",
         element: <Review />
       },
+
+
+    ]
+  },
+  {
+    path: "/payment",
+    element: <Payment />,
+    children: [
+      {
+        path: "success",
+        element: <Success />
+      },
+
 
     ]
   },

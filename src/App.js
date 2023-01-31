@@ -8,7 +8,6 @@ import { useEffect } from 'react';
 import auth from './firebase_init';
 import { setLoading, setUser } from './features/auth/authSlice';
 import { onAuthStateChanged } from 'firebase/auth';
-import { ToastContainer } from 'react-toastify';
 
 function App() {
   const dispatch = useDispatch()

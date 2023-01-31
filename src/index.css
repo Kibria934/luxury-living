@@ -5,6 +5,12 @@
 @tailwind utilities;
 
 
+@layer components {
+  .input-box {
+    @apply py-2 px-4 text-lg outline-none border-purple-300 border-2 input bg-base-200
+  }
+}
+
 body {
   margin: 0;
   font-family: 'Kdam Thmor Pro', sans-serif;

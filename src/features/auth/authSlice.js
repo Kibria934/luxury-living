@@ -18,7 +18,6 @@ export const createUser = createAsyncThunk(
     "auth/createUser",
     async ({ email, password, name }) => {
         const data = await createUserWithEmailAndPassword(auth, email, password);
-        console.log(data)
         const updatedUser = await updateProfile(data.user, {
             displayName: name,
         })
@@ -41,7 +40,6 @@ export const googleLoginUser = createAsyncThunk(
     async () => {
         const googleProvider = new GoogleAuthProvider()
         const data = await signInWithPopup(auth, googleProvider)
-        console.log(data)
         return data;
     }
 );
@@ -63,7 +61,6 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, { payload }) => {
-            console.log('payload', payload)
             state.user.email = payload.email
             state.user.name = payload.displayName
             state.user.imgUrl = payload?.photoURL

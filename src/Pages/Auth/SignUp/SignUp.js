@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import AuthBox from '../../../Components/SharedComponents/AuthBox';
 import googleLogo from '../../../Icon/Group 573.png'
 import { BiError } from 'react-icons/bi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createUser } from '../../../features/auth/authSlice';
 
 
@@ -12,7 +12,6 @@ const SignUp = () => {
 
     const { handleSubmit, register, reset, formState: { errors }, control
     } = useForm();
-
 
     const dispatch = useDispatch()
 
@@ -26,6 +25,7 @@ const SignUp = () => {
             return setPasswordError(true)
         }
     };
+
 
     // -------- commonStyle----------
     const inputStyle = "outline-0 font-bold font-thin mb-2 transition-all duration-300 placeholder-neutral active:border-b-3 focus:border-black border-b-2 border-slate-300 text-xl p-2 w-full"
@@ -58,8 +58,8 @@ const SignUp = () => {
             </div>
             <div className={`divider ${commonStyle} `}>OR</div>
             <div className={`flex flex-col items-center justify-center`}>
-                <AuthBox img={googleLogo} />
-                <AuthBox img={"https://1.bp.blogspot.com/-S8HTBQqmfcs/XN0ACIRD9PI/AAAAAAAAAlo/FLhccuLdMfIFLhocRjWqsr9cVGdTN_8sgCPcBGAYYCw/s1600/f_logo_RGB-Blue_1024.png"} />
+                <AuthBox img={googleLogo} title={"Continue with Google"} ></AuthBox>
+                <AuthBox img={"https://1.bp.blogspot.com/-S8HTBQqmfcs/XN0ACIRD9PI/AAAAAAAAAlo/FLhccuLdMfIFLhocRjWqsr9cVGdTN_8sgCPcBGAYYCw/s1600/f_logo_RGB-Blue_1024.png"} title="Continue with Facebook"></AuthBox>
             </div>
         </div>
     );
