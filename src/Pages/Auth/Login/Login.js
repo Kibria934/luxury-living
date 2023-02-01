@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import googleLogo from '../../../Icon/Group 573.png'
 import logo from '../../../images/navbarLogo.png'
 import { AiOutlineRollback } from 'react-icons/ai';
@@ -8,18 +8,17 @@ import { googleLoginUser } from '../../../features/auth/authSlice';
 
 const Login = () => {
     const dispatch = useDispatch()
-    const { user } = useSelector(state => state.auth)
+    const { user, isLoading } = useSelector(state => state.auth)
     const navigate = useNavigate()
 
     const returnF = () => {
         window.history.back()
     }
 
-    const handleSignIn = () => {
-        dispatch(googleLoginUser())
-        if (user) {
-            navigate("/")
-        }
+    const handleSignIn = async () => {
+        await dispatch(googleLoginUser())
+        await console.log(user.email)
+
     }
 
     return (

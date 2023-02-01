@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import AuthBox from '../../../Components/SharedComponents/AuthBox';
 import googleLogo from '../../../Icon/Group 573.png'
 import { BiError } from 'react-icons/bi';
@@ -12,15 +12,17 @@ const SignUp = () => {
 
     const { handleSubmit, register, reset, formState: { errors }, control
     } = useForm();
+    const navigate = useNavigate()
 
     const dispatch = useDispatch()
 
     const [passwordError, setPasswordError] = useState(false)
 
-    const onSubmit = ({ email, password, name, confirmPassword }) => {
-        if (password === confirmPassword && name) {
-            setPasswordError(true)
-            dispatch(createUser({ email, password, name }))
+    const onSubmit = ({ email, password, firstName, lastName, confirmPassword }) => {
+        if (password === confirmPassword && firstName && lastName) {
+            setPasswordError(false)
+            dispatch(createUser({ email, password, firstName, lastName }))
+            navigate("/")
         } else {
             return setPasswordError(true)
         }
@@ -37,8 +39,16 @@ const SignUp = () => {
 
                 {passwordError && <p className='text-left mb-7 items-center flex  text-red-700 px-2'>Password isn't matched!</p>}
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <input id='name' type={'text'} name='' {...register("name", { required: true })} placeholder='Full Name' className={inputStyle} />
-                    {errors.name?.type === 'required' && <p className='text-left mb-7   items-center flex  text-red-700 px-2' role="alert"> <span><BiError /></span> Name is required!</p>}
+                    <div className='flex gap-3 flex-wrap lg:flex-nowrap'>
+                        <input id='firstName' type={'text'} name='' {...register("firstName", { required: true })} placeholder='First Name' className={inputStyle} />
+                        {errors.firstName?.type === 'required' && <p className='text-left mb-7   items-center flex  text-red-700 px-2' role="alert"> <span><BiError /></span> first Name is required!</p>}
+
+                        <input id='lastName' type={'text'} name='' {...register("lastName", { required: true })} placeholder='Last Name' className={inputStyle} />
+                        {errors.lastName?.type === 'required' && <p className='text-left mb-7   items-center flex  text-red-700 px-2' role="alert"> <span><BiError /></span> last Name is required!</p>}
+                    </div>
+
+
+
 
                     <input id='email' type={'text'} name='' {...register("email", { required: true })} placeholder='User Email' className={inputStyle} />
                     {errors.email?.type === 'required' && <p className='text-left px-2 items-center flex  mb-7 text-red-700' role="alert"> <span><BiError /></span> Email is required!</p>}

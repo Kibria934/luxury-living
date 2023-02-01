@@ -12,7 +12,8 @@ import DashboardAvatar from '../../../Pages/Dashboard/User/DashboardAvatar';
 
 const Dashboard = () => {
     const location = useLocation()
-    const { user } = useSelector(state => state.auth)
+    const { user, isLoading } = useSelector(state => state.auth)
+    let name = user.firstName + " " + user.lastName
 
     return (
         <div>
@@ -21,7 +22,7 @@ const Dashboard = () => {
                     <img className='' src={navLogo} alt="" />
                 </figure>
                 <h4 className='capitalize lg:text-2xl lg:block hidden lg:ml-40'>{location.pathname.split('/')[1]}</h4>
-                <h4 className='float-right lg:text-md md:text-md hidden lg:block '>{user.name}</h4>
+                <h4 className='float-right lg:text-md md:text-md hidden lg:block '>{name ? name : user.name}</h4>
                 <label htmlFor="sidebar" className=" drawer-button lg:hidden"><TbGridDots /></label>
             </div>
 
@@ -38,17 +39,18 @@ const Dashboard = () => {
                 <div className="drawer-side">
                     <label htmlFor="sidebar" className="drawer-overlay"></label>
                     <ul className="menu pl-5 px-3 py-4 w-80 text-center  flex justify-between items-baseline bg-base-100 ">
-                       <div>
-                       <DashboardAvatar/>
+                        <div>
+                            {!isLoading && <DashboardAvatar />}
+                            {isLoading && <p>Loading...</p>}
                             {/* <!-- Sidebar content here --> */}
                             <Link className="text-lg py-2   px-2 hover:bg-base-200 active:bg-primary active:text-white rounded-lg transition-all flex justify-start items-center gap-2  duration-150" to="/dashboard" ><CiShoppingCart /> Order </Link>
                             <Link className="text-lg py-2   px-2 hover:bg-base-200 active:bg-primary active:text-white rounded-lg transition-all flex justify-start items-center gap-2  duration-150" to="booklist" ><HiOutlineListBullet /> Book List </Link>
                             <Link className="text-lg py-2   px-2 hover:bg-base-200 active:bg-primary active:text-white rounded-lg transition-all  flex justify-start  items-center gap-2 duration-150" to="review" > <RiMessage2Line />Review</Link>
-                       </div>
-                    <div className=' mb-20  flex flex-col gap-4 w-full mx-auto'>
+                        </div>
+                        <div className=' mb-20  flex flex-col gap-4 w-full mx-auto'>
                             <Link className='text-left flex item-center gap-2 ' to={'/'}><span className='text-xl'><AiOutlineHome /> </span>Home</Link>
                             <Link className='text-left flex item-center gap-2' to={'/projects'}> <span className='text-xl'><VscProject /></span> Projects</Link>
-                    </div>
+                        </div>
                     </ul>
 
                 </div>

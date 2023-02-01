@@ -6,8 +6,9 @@ const initialState = {
     user: {
         name: "",
         email: "",
-        imgUrl: "",
+        imgUrl: null,
         role: "",
+
     },
     isLoading: false,
     isError: false,
@@ -16,12 +17,24 @@ const initialState = {
 
 export const createUser = createAsyncThunk(
     "auth/createUser",
-    async ({ email, password, name }) => {
+    async ({ email, password, firstName, lastName }) => {
         const data = await createUserWithEmailAndPassword(auth, email, password);
         const updatedUser = await updateProfile(data.user, {
-            displayName: name,
+            displayName: firstName + " " + lastName,
         })
         return data;
+    }
+);
+export const getUser = createAsyncThunk(
+    "auth/getUser",
+    async ({ email, name = "", url = "" }) => {
+        const res = await fetch(`http://localhost:5000/auth/manage/get-user/${email}`)
+        const data = await res.json()
+        if (data.status === 'success') {
+            return data
+        } else {
+            return { email, name, url }
+        }
     }
 );
 
@@ -67,7 +80,8 @@ const authSlice = createSlice({
         },
         setLoading: (state, { payload }) => {
             state.isLoading = payload;
-        }
+        },
+
     },
     extraReducers: builder => {
         builder.addCase(createUser.pending, state => {
@@ -96,7 +110,8 @@ const authSlice = createSlice({
                 state.isLoading = false
                 state.isError = false
                 state.error = ""
-                state.user.email = payload.email
+                state.user.email = payload.user.email
+                state.user.name = payload.user.displayName
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.isLoading = false
@@ -113,8 +128,8 @@ const authSlice = createSlice({
                 state.isError = false
                 state.error = ""
                 state.user.email = payload.user.email
-                state.suer.name = payload.user.displayName
-                state.suer.imgUrl = payload.user.photoURL
+                state.user.name = payload.user.displayName
+                state.user.imgUrl = payload.user.photoURL
             })
             .addCase(googleLoginUser.rejected, (state, action) => {
                 state.isLoading = false
@@ -135,6 +150,28 @@ const authSlice = createSlice({
                 state.user.imgUrl = ""
             })
             .addCase(removeUser.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.error = action.error.message
+            })
+            .addCase(getUser.pending, state => {
+                state.isLoading = true
+                state.isError = false
+                state.error = ""
+            })
+            .addCase(getUser.fulfilled, (state, { payload }) => {
+                state.isLoading = false
+                state.isError = false
+                state.error = ""
+                if (payload.status === 'success') {
+                    state.user = payload.data
+                } else {
+                    state.user.email = payload.email;
+                    state.user.name = payload.name
+                    state.user.imgUrl = payload?.url
+                }
+            })
+            .addCase(getUser.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.error = action.error.message

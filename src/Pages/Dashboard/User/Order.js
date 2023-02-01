@@ -7,13 +7,16 @@ import { useSelector } from 'react-redux';
 const Order = () => {
     const { register, reset, handleSubmit } = useForm();
 
-    const { email, name } = useSelector(state => state.auth.user)
+    const { user } = useSelector(state => state.auth)
+    const { email, firstName, lastName } = user
+    let name = firstName + " " + lastName
 
     const onSubmit = (data) => {
+        const newData = { ...data, customer: name ? name : user?.name }
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ data })
+            body: JSON.stringify(newData)
         };
         fetch('http://localhost:5000/api/order', requestOptions)
             .then(response => response.json())
@@ -25,31 +28,23 @@ const Order = () => {
     };
 
     return (
-        <form onSubmit={ handleSubmit(onSubmit) }>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <div className='w-6/12 mx-auto  mt-16'>
                 <div className='flex flex-col my-4 gap-3'>
                     <input {...register("customer", { required: true })} type="text" value={`${name}`} placeholder="Your Name" className="input text-xl w-full py-3 " />
-                    <input {...register("email", { require: true })} type="text" value={`${email}`} placeholder="Email Account" className="input opacity-50 text-xl w-full py-3 " />
+                    <input {...register("email", { required: true })} type="text" value={`${email}`} placeholder="Email Account" className="input opacity-50 text-xl w-full py-3 " />
                     <input {...register("product", { required: true })} type="text" placeholder="Product Name" className="input text-xl w-full py-3 " />
                 </div>
                 <div className='flex gap-3 lg:flex-row flex-col'>
                     <select name="shippingMethod" {...register("shippingMethod", { required: true })} className="select w-full max-w-xs">
                         <option className='p-4' selected disabled value={"undefined"} >Select Shipping method</option>
                         <option className='p-4' value="Courier" >Courier</option>
-                        <option className='p-4' value="USLocal shipping<D" >Local shipping</option>
+                        <option className='p-4' value="USLocal shipping" >Local shipping</option>
                         <option className='p-4' value="Flexible delivery" >Flexible delivery</option>
                         <option className='p-4' value="Overnight delivery" >Overnight delivery</option>
                     </select>
                     <input {...register("postcode", { required: true })} type="number" placeholder="Post Code" className="input text-xl py-3 w-full" />
                 </div>
-                {/* <div className='my-4 flex flex-wrap justify-around'>
-                    <div>
-                        <input {...register("creditCard",{require:true})} type="radio" name="radio-2" className="radio radio-primary" checked /> <span className='flex items-center gap-2'> <img className='w-6' src={creditCard} alt="" />Creadit Card</span>
-                    </div>
-                    <div>
-                        <input {...register("paypal",{require:true})} type="radio" name="radio-2" className="radio radio-primary" /> <span className='flex items-center gap-2'><img className='w-6' src={paypal} alt="" /> Paypal</span>
-                    </div>
-                </div>  */}
 
                 <div className='my-4'>
                     <div>

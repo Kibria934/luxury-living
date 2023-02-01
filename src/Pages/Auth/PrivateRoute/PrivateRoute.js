@@ -1,20 +1,26 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 const PrivateRoute = ({ children }) => {
-    const { user, isLoading } = useSelector(state => state.auth)
-    console.log(user)
+    const { user, isLoading, isError, error } = useSelector(state => state.auth)
     const location = useLocation()
 
-    if (isLoading) {
-        <p>Loading...</p>
+    if (isError || error) {
+        console.log(error)
     }
 
-    if (!user.email) {
-        <Navigate to='/login' state={{ from: location }} replace />
+    if (isLoading) {
+        return <p>Loading...</p>
     }
-    return children
+
+    if (user.email === "") {
+        return <Navigate to='/login' state={{ from: location }} replace />
+    }
+
+    if (user.email !== "") {
+        return children
+    }
 };
 
 export default PrivateRoute;

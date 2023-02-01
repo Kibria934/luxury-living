@@ -17,6 +17,7 @@ const Navbar = () => {
 
     const firstChar = user?.name?.split(" ")[0]?.slice(0, 1)
     const lastChar = user?.name?.split(" ")[1]?.slice(0, 1)
+    const nickname = user?.firstName?.slice(0, 1) + user?.lastName?.slice(0, 1)
 
 
 
@@ -56,25 +57,25 @@ const Navbar = () => {
                 {/* --user image on avatar-- */}
 
                 {
-                    user.email && <div className='dropdown relative'>
-                        {user.imgUrl ? <label tabIndex={0} className="avatar online ">
+                    user?.email && <div className='dropdown relative'>
+                        {user?.imgUrl ? <label tabIndex={0} className="avatar online ">
                             <div className="md:w-12 w-10 lg:w-12 mr-3 rounded-full">
                                 <img src={user.imgUrl} />
                             </div>
                         </label>
-                            : <label tabIndex={0} className="avatar placeholder">
+                            : <label tabIndex={0} className="avatar rounded-full  placeholder">
                                 <div className="bg-neutral-focus text-neutral-content  rounded-full mr-3 md:w-12 w-10 lg:w-12">
-                                    <span className="text-lg text-white">{lastChar != undefined ? firstChar + lastChar : firstChar}</span>
+                                    <span className="text-lg  text-white">{user?.name && !user.firstName ? (lastChar != undefined ? firstChar + lastChar : firstChar) : nickname}</span>
                                 </div>
                             </label>
                         }
                         <ul tabIndex={0} className="menu z-50 mr-64 menu-compact py-3 dropdown-content  px-2 my-4 shadow bg-base-100 rounded-box w-52 lg:absolute hidden lg:block  left-[-110px]">
                             <li className=' flex justify-center items-center rounded-full'>{user.imgUrl ? <img className='w-20' src={user.imgUrl} alt="" /> : <div className="bg-neutral-focus text-neutral-content  rounded-full mr-3 md:w-12 w-10 lg:w-12">
-                                <span className="text-lg text-white">{lastChar != undefined ? firstChar + lastChar : firstChar}</span>
+                                <span className="text-md text-white">{user?.name && !user.firstName ? (lastChar != undefined ? firstChar + lastChar : firstChar) : nickname}</span>
                             </div>}</li>
                             <li className='hover-bordered'><a>{user.name}</a></li>
-                            {user.email && !user.role && < li className="hover-bordered"><Link to="/register">Get started</Link></li>}
-                            {user.email && user.role && < li className="hover-bordered"><Link to="/dashboard">Dashboard</Link></li>}
+                            {user?.email && !user.role && < li className="hover-bordered"><Link to="/register">Get started</Link></li>}
+                            {user?.email && user.role && < li className="hover-bordered"><Link to="/dashboard">Dashboard</Link></li>}
                             <li className="hover-bordered">
                                 <button onClick={handleSignOut} >
                                     Sign out  <MdOutlineLogout />
@@ -83,10 +84,8 @@ const Navbar = () => {
                         </ul>
                     </div>
                 }
-
-
                 {
-                    !user.email ? <Link to={"/login"} className="btn btn-primary">
+                    !user?.email ? <Link to={"/login"} className="btn btn-primary">
                         login
                     </Link> : <button className='lg:hidden ms-2 p-2' onClick={handleSignOut} >
                         <MdOutlineLogout />

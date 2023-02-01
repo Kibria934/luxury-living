@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, useWatch } from "react-hook-form";
 import { FaChevronLeft } from "react-icons/fa";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRegisterMutation } from '../../../features/auth/authApi';
 
@@ -17,25 +17,22 @@ const AccountCreator = () => {
     const [passError, setPassError] = useState(null)
     const [postUser, { isLoading: postLoad, isError: postError }] = useRegisterMutation()
 
+    const dispatch = useDispatch()
+
     const handlePass = () => {
         if (password === confirmPassword) {
             setPassError(false)
-            console.log("match,", passError)
         } else {
             setPassError(true)
-            console.log("not match,", passError)
         }
     }
 
     const onSubmit = data => {
-        // console.log(data.imgUrl[0].name)
         if (data.password === data.confirmPassword && user.email) {
             const { firstName, lastName, password, phone, role, imgUrl, term } = data
-            const userData = { name: firstName + " " + lastName, email: user.email, password, phone, role, imgUrl: imgUrl[0].name, term }
+            const userData = { firstName, lastName, email: user.email, password, phone, role, imgUrl: imgUrl[0]?.name, term }
             postUser(userData)
-
-        } else {
-            console.log('somthing error')
+            navigate("/")
         }
     };
 

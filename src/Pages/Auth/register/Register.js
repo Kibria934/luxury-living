@@ -7,11 +7,14 @@ import RegisterBox from '../../../Components/DahboardComponents/AuthComponents/R
 
 const Register = () => {
     return (
-        <div className='w-[70vw] mx-auto flex flex-wrap '>
-            <RegisterBox type="user" img={employee} ><h3>User</h3></RegisterBox>
-            <RegisterBox type="employee" img={admin} ><h3>Employee</h3></RegisterBox>
-            <RegisterBox type="manager" img={manager} ><h3>Manager</h3></RegisterBox>
-            <RegisterBox type="admin" img={user} ><h3>Admin</h3></RegisterBox>
+        <div>
+            <h3 className='text-center text-2xl my-8'>Continue as ...</h3>
+            <div className='w-[70vw] mx-auto flex flex-wrap '>
+                <RegisterBox type="user" img={employee} ><h3>User</h3></RegisterBox>
+                <RegisterBox type="employee" img={admin} ><h3>Employee</h3></RegisterBox>
+                <RegisterBox type="manager" img={manager} ><h3>Manager</h3></RegisterBox>
+                <RegisterBox type="admin" img={user} ><h3>Admin</h3></RegisterBox>
+            </div>
         </div>
     );
 };

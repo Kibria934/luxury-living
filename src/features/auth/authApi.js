@@ -7,7 +7,10 @@ const authApi = apiSlice.injectEndpoints({
                 method: "POST",
                 url: "/auth/manage/signUp",
                 body: data
-            })
+            }),
+            transformResponse: (response, meta, arg) => {
+                return response.data
+            },
         })
     })
 })
